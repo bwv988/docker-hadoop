@@ -1,5 +1,4 @@
-FROM bde2020/hadoop-base:1.0.0
-MAINTAINER Ivan Ermilov <ivan.s.ermilov@gmail.com>
+FROM bwv988/hadoop-base
 
 ENV HDFS_CONF_dfs_namenode_name_dir=file:///hadoop/dfs/name
 RUN mkdir -p /hadoop/dfs/name

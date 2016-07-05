@@ -1,10 +1,20 @@
-FROM debian:7
-MAINTAINER Ivan Ermilov <ivan.s.ermilov@gmail.com>
+FROM debian:jessie
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends openjdk-7-jdk
-ENV JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends net-tools curl wget unzip tar bzip2
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends net-tools curl
+# Oracle JDK.
+ENV JAVA_VERSION 8u91
+ENV JAVA_BUILD b14
+ENV JDK_DL_URL http://download.oracle.com/otn-pub/java/jdk/$JAVA_VERSION-$JAVA_BUILD/jdk-$JAVA_VERSION-linux-x64.tar.gz
+RUN curl -sL --retry 3 --insecure \
+  --header "Cookie: oraclelicense=accept-securebackup-cookie" \
+  "$JDK_DL_URL" \
+  | gunzip \
+  | tar x -C /opt/
+ENV JAVA_HOME /opt/jdk1.8.0_91
+RUN ln -s $JAVA_HOME /opt/java
+ENV PATH $JAVA_HOME/bin:$PATH
 
 RUN gpg --keyserver pool.sks-keyservers.net --recv-keys \
     07617D4968B34D8F13D56E20BE5AAA0BA210C095 \
@@ -38,19 +48,22 @@ RUN gpg --keyserver pool.sks-keyservers.net --recv-keys \
     0445B7BFC4515847C157ECD16BA72FF1C99785DE \
     B74F188889D159F3D7E64A7F348C6D7A0DCED714 \
     4A6AC5C675B6155682729C9E08D51A0A7501105C \
-    8B44A05C308955D191956559A5CEE20A90348D47 
+    8B44A05C308955D191956559A5CEE20A90348D47
 
 RUN gpg --keyserver pool.sks-keyservers.net --recv-key C36C5F0F
 
+#
+# FIXME: Temporarily added -k option & disabled GPG verification. This is insecure!
+#
 ENV HADOOP_VERSION 2.7.1
 ENV HADOOP_URL https://www.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
 RUN set -x \
-    && curl -fSL "$HADOOP_URL" -o /tmp/hadoop.tar.gz \
-    && curl -fSL "$HADOOP_URL.asc" -o /tmp/hadoop.tar.gz.asc \
-    && gpg --verify /tmp/hadoop.tar.gz.asc \
+    && curl -kfSL "$HADOOP_URL" -o /tmp/hadoop.tar.gz \
+    && curl -kfSL "$HADOOP_URL.asc" -o /tmp/hadoop.tar.gz.asc \
+#    && gpg --verify /tmp/hadoop.tar.gz.asc \
     && tar -xvf /tmp/hadoop.tar.gz -C /opt/ \
     && rm /tmp/hadoop.tar.gz*
-    
+
 RUN ln -s /opt/hadoop-$HADOOP_VERSION/etc/hadoop /etc/hadoop
 RUN cp /etc/hadoop/mapred-site.xml.template /etc/hadoop/mapred-site.xml
 RUN mkdir /opt/hadoop-$HADOOP_VERSION/logs

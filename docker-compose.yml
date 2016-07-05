@@ -1,5 +1,5 @@
 namenode:
-  image: bde2020/hadoop-namenode:1.0.0
+  image: bwv988/hadoop-namenode
   hostname: namenode
   container_name: namenode
   domainname: hadoop
@@ -11,64 +11,13 @@ namenode:
   env_file:
     - ./hadoop.env
 
-resourcemanager:
-  image: bde2020/hadoop-resourcemanager:1.0.0
-  hostname: resourcemanager
-  container_name: resourcemanager
-  domainname: hadoop
-  net: hadoop
-  env_file:
-    - ./hadoop.env
-
-historyserver:
-  image: bde2020/hadoop-historyserver:1.0.0
-  hostname: historyserver
-  container_name: historyserver
-  domainname: hadoop
-  net: hadoop
-  volumes:
-    - ./data/historyserver:/hadoop/yarn/timeline
-  env_file:
-    - ./hadoop.env
-
-nodemanager1:
-  image: bde2020/hadoop-nodemanager:1.0.0
-  hostname: nodemanager1
-  container_name: nodemanager1
-  domainname: hadoop
-  net: hadoop
-  env_file:
-    - ./hadoop.env
-
 datanode1:
-  image: bde2020/hadoop-datanode:1.0.0
+  image: bwv988/hadoop-datanode
   hostname: datanode1
   container_name: datanode1
   domainname: hadoop
   net: hadoop
   volumes:
     - ./data/datanode1:/hadoop/dfs/data
-  env_file:
-    - ./hadoop.env
-
-datanode2:
-  image: bde2020/hadoop-datanode:1.0.0
-  hostname: datanode2
-  container_name: datanode2
-  domainname: hadoop
-  net: hadoop
-  volumes:
-    - ./data/datanode2:/hadoop/dfs/data
-  env_file:
-    - ./hadoop.env
-
-datanode3:
-  image: bde2020/hadoop-datanode:1.0.0
-  hostname: datanode3
-  container_name: datanode3
-  domainname: hadoop
-  net: hadoop
-  volumes:
-    - ./data/datanode3:/hadoop/dfs/data
   env_file:
     - ./hadoop.env
