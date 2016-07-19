@@ -1,5 +1,9 @@
+# Base docker file for Hadoop and other containers.
+# FIXME: Temporarily added -k option for curl & disabled GPG verification. This is insecure!
+
 FROM debian:jessie
 
+# Install some useful tools.
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends net-tools curl wget unzip tar bzip2
 
@@ -53,7 +57,7 @@ RUN gpg --keyserver pool.sks-keyservers.net --recv-keys \
 RUN gpg --keyserver pool.sks-keyservers.net --recv-key C36C5F0F
 
 #
-# FIXME: Temporarily added -k option & disabled GPG verification. This is insecure!
+# FIXME: -k hack!
 #
 ENV HADOOP_VERSION 2.7.1
 ENV HADOOP_URL https://www.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
@@ -77,7 +81,7 @@ ENV MULTIHOMED_NETWORK=1
 ENV USER=root
 ENV PATH $HADOOP_PREFIX/bin/:$PATH
 
-ADD entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
 RUN chmod a+x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
