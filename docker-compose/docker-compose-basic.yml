@@ -1,0 +1,21 @@
+# Simple setup for testing.
+version: '2'
+services:
+    namenode:
+      image: analytics/hadoop-namenode
+      hostname: namenode
+      container_name: namenode
+      volumes:
+        - ./data/namenode:/hadoop/dfs/name
+      environment:
+        - CLUSTER_NAME=test
+      env_file:
+        - ./hadoop.env
+
+    datanode1:
+      image: analytics/hadoop-datanode
+      hostname: datanode1
+      volumes:
+        - ./data/datanode1:/hadoop/dfs/data
+      env_file:
+        - ./hadoop.env

@@ -1,8 +1,8 @@
 # Dockerfile for Hadoop resourcemanager.
 
-FROM bwv988/hadoop-base
+FROM analytics/hadoop-base
 
-COPY run.sh /run.sh
+COPY resourcemanager-run.sh /resourcemanager-run.sh
 RUN chmod a+x /run.sh
 
-CMD ["/run.sh"]
+CMD ["/resourcemanager-run.sh"]

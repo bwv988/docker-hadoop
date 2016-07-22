@@ -5,7 +5,7 @@ FROM debian:jessie
 
 # Install some useful tools.
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends net-tools curl wget unzip tar bzip2
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends net-tools curl wget unzip tar bzip2 netcat
 
 # Oracle JDK.
 ENV JAVA_VERSION 8u91
@@ -59,7 +59,7 @@ RUN gpg --keyserver pool.sks-keyservers.net --recv-key C36C5F0F
 #
 # FIXME: -k hack!
 #
-ENV HADOOP_VERSION 2.7.1
+ENV HADOOP_VERSION 2.7.2
 ENV HADOOP_URL https://www.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
 RUN set -x \
     && curl -kfSL "$HADOOP_URL" -o /tmp/hadoop.tar.gz \
@@ -72,7 +72,8 @@ RUN ln -s /opt/hadoop-$HADOOP_VERSION/etc/hadoop /etc/hadoop
 RUN cp /etc/hadoop/mapred-site.xml.template /etc/hadoop/mapred-site.xml
 RUN mkdir /opt/hadoop-$HADOOP_VERSION/logs
 
-RUN mkdir /hadoop-data
+RUN mkdir /hadoop-data && \
+    mkdir /entrypoints
 
 ENV HADOOP_PREFIX=/opt/hadoop-$HADOOP_VERSION
 ENV HADOOP_CONF_DIR=/etc/hadoop
@@ -81,7 +82,7 @@ ENV MULTIHOMED_NETWORK=1
 ENV USER=root
 ENV PATH $HADOOP_PREFIX/bin/:$PATH
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod a+x /entrypoint.sh
+COPY hadoop-entrypoint.sh /entrypoints/hadoop-entrypoint.sh
+RUN chmod a+x /entrypoints/hadoop-entrypoint.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/entrypoints/hadoop-entrypoint.sh"]
