@@ -1,0 +1,3 @@
+[submodule "docker-env-utils"]
+	path = docker-env-utils
+	url = https://github.com/bwv988/docker-env-utils
