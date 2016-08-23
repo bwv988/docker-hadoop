@@ -8,15 +8,17 @@ RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends net-tools curl wget unzip tar bzip2 netcat
 
 # Oracle JDK.
-ENV JAVA_VERSION 8u91
-ENV JAVA_BUILD b14
+ENV JAVA_MAJOR 8
+ENV JAVA_MINOR 101
+ENV JAVA_BUILD b13
+ENV JAVA_VERSION $JAVA_MAJORu$JAVA_MINOR
 ENV JDK_DL_URL http://download.oracle.com/otn-pub/java/jdk/$JAVA_VERSION-$JAVA_BUILD/jdk-$JAVA_VERSION-linux-x64.tar.gz
 RUN curl -sL --retry 3 --insecure \
   --header "Cookie: oraclelicense=accept-securebackup-cookie" \
   "$JDK_DL_URL" \
   | gunzip \
   | tar x -C /opt/
-ENV JAVA_HOME /opt/jdk1.8.0_91
+ENV JAVA_HOME /opt/jdk1.8.0_$JAVA_MINOR
 RUN ln -s $JAVA_HOME /opt/java
 ENV PATH $JAVA_HOME/bin:$PATH
 
@@ -68,12 +70,11 @@ RUN set -x \
     && tar -xvf /tmp/hadoop.tar.gz -C /opt/ \
     && rm /tmp/hadoop.tar.gz*
 
-RUN ln -s /opt/hadoop-$HADOOP_VERSION/etc/hadoop /etc/hadoop
-RUN cp /etc/hadoop/mapred-site.xml.template /etc/hadoop/mapred-site.xml
-RUN mkdir /opt/hadoop-$HADOOP_VERSION/logs
-
-RUN mkdir /hadoop-data && \
-    mkdir /entrypoints
+RUN ln -s /opt/hadoop-$HADOOP_VERSION/etc/hadoop /etc/hadoop \
+ && cp /etc/hadoop/mapred-site.xml.template /etc/hadoop/mapred-site.xml \
+ && mkdir /opt/hadoop-$HADOOP_VERSION/logs \
+ && mkdir /hadoop-data \
+ && mkdir /entrypoints
 
 ENV HADOOP_PREFIX=/opt/hadoop-$HADOOP_VERSION
 ENV HADOOP_CONF_DIR=/etc/hadoop
