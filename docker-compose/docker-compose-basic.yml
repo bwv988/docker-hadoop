@@ -1,4 +1,6 @@
 # Simple setup for testing.
+# Only starts name node and single data node.
+
 version: '2'
 services:
     namenode:
@@ -7,10 +9,14 @@ services:
       container_name: namenode
       volumes:
         - ./data/namenode:/hadoop/dfs/name
+        - ./data/exchange:/exchange
       environment:
         - CLUSTER_NAME=test
       env_file:
         - ./hadoop.env
+      ports:
+        - "50070:50070"
+        - "8020:8020"
 
     datanode1:
       image: analytics/hadoop-datanode
@@ -19,3 +25,5 @@ services:
         - ./data/datanode1:/hadoop/dfs/data
       env_file:
         - ./hadoop.env
+      depends_on:
+        - namenode    

@@ -1,5 +1,5 @@
-# Start full Hadoop cluster.
-# FIXME: Convert to docker-compose v2 syntax.
+# Start full Hadoop cluster with 3 data nodes.
+
 version: '2'
 services:
     namenode:
@@ -12,6 +12,9 @@ services:
         - CLUSTER_NAME=test
       env_file:
         - ./hadoop.env
+      ports:
+        - "50070:50070"
+        - "8020:8020"
 
     resourcemanager:
       image: analytics/hadoop-resourcemanager

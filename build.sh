@@ -5,24 +5,18 @@ echo -e "Building Hadoop docker images..."
 function build_img() {
   local prefix=$1
   local imgname=$2
-  local img="${prefix}/${imgname}"
+  local img="${prefix}/hadoop-${imgname}"
 
-  echo -e "Building docker image ${img}..."
-  docker build -t $img .
+  echo -e "Building docker image hadoop-${imgname}..."
+
+  docker build -t $img -f Dockerfile.${imgname} .
 }
 
 IMGPREFIX=analytics
-cd base
-build_img $IMGPREFIX hadoop-base
 
-cd ../namenode
-build_img $IMGPREFIX hadoop-namenode
-
-cd ../nodemanager
-build_img $IMGPREFIX hadoop-nodemanager
-
-cd ../historyserver
-build_img $IMGPREFIX hadoop-historyserver
-
-cd ../datanode
-build_img $IMGPREFIX hadoop-datanode
+build_img $IMGPREFIX base
+build_img $IMGPREFIX namenode
+build_img $IMGPREFIX nodemanager
+build_img $IMGPREFIX historyserver
+build_img $IMGPREFIX datanode
+build_img $IMGPREFIX resourcemanager
