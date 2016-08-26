@@ -2,7 +2,7 @@
 
 FROM analytics/hadoop-base
 
-COPY provision/resourcemanager-run.sh /resourcemanager-run.sh
+COPY files/resourcemanager-run.sh /resourcemanager-run.sh
 RUN chmod a+x /resourcemanager-run.sh
 
 CMD ["/resourcemanager-run.sh"]

@@ -92,7 +92,7 @@ ENV PATH $HADOOP_PREFIX/bin/:$PATH
 
 COPY docker-env-utils/common.sh /entrypoints/common.sh
 COPY docker-env-utils/inject_hadoop_cfg.sh /entrypoints/inject_hadoop_cfg.sh
-COPY provision/hadoop-entrypoint.sh /entrypoints/hadoop-entrypoint.sh
+COPY files/hadoop-entrypoint.sh /entrypoints/hadoop-entrypoint.sh
 RUN chmod a+x /entrypoints/hadoop-entrypoint.sh
 
 ENTRYPOINT ["/entrypoints/hadoop-entrypoint.sh"]
