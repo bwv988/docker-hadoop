@@ -9,7 +9,10 @@ function build_img() {
 
   echo -e "Building docker image hadoop-${imgname}..."
 
-  docker build -t $img -f Dockerfile.${imgname} .
+  pushd $(pwd)
+  cd $imgname
+  docker build -t $img .
+  popd
 }
 
 IMGPREFIX=analytics
