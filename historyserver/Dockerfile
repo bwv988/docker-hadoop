@@ -5,7 +5,7 @@ ENV YARN_CONF_yarn_timeline___service_leveldb___timeline___store_path=/hadoop/ya
 RUN mkdir -p /hadoop/yarn/timeline
 VOLUME /hadoop/yarn/timeline
 
-COPY files/historyserver-run.sh /historyserver-run.sh
-RUN chmod a+x /historyserver-run.sh
+COPY files/historyserver-run.sh /entrypoints/historyserver-run.sh
+RUN chmod a+x /entrypoints/historyserver-run.sh
 
-CMD ["/historyserver-run.sh"]
+CMD ["/entrypoints/historyserver-run.sh"]

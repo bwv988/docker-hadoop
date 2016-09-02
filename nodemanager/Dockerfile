@@ -2,7 +2,7 @@
 
 FROM analytics/hadoop-base
 
-COPY files/nodemanager-run.sh /nodemanager-run.sh
-RUN chmod a+x /nodemanager-run.sh
+COPY files/nodemanager-run.sh /entrypoints/nodemanager-run.sh
+RUN chmod a+x /entrypoints/nodemanager-run.sh
 
-CMD ["/nodemanager-run.sh"]
+CMD ["/entrypoints/nodemanager-run.sh"]

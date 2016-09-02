@@ -2,7 +2,7 @@
 
 FROM analytics/hadoop-base
 
-COPY files/resourcemanager-run.sh /resourcemanager-run.sh
-RUN chmod a+x /resourcemanager-run.sh
+COPY files/resourcemanager-run.sh /entrypoints/resourcemanager-run.sh
+RUN chmod a+x /entrypoints/resourcemanager-run.sh
 
-CMD ["/resourcemanager-run.sh"]
+CMD ["/entrypoints/resourcemanager-run.sh"]
