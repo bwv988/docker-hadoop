@@ -1,6 +1,6 @@
 # Dockerfile for Hadoop nodemanager.
 
-FROM analytics/hadoop-base
+FROM bwv988/hadoop-base
 
 COPY files/nodemanager-run.sh /entrypoints/nodemanager-run.sh
 RUN chmod a+x /entrypoints/nodemanager-run.sh
