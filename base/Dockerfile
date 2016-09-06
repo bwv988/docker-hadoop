@@ -15,6 +15,7 @@ RUN apt-get update && \
     netcat
 
 # Install Oracle JDK.
+# FIXME: Use same download sequence as for Hadoop below. Remove downloaded .tar.gz.
 ENV JAVA_MAJOR 8
 ENV JAVA_MINOR 101
 ENV JAVA_BUILD b13
@@ -33,7 +34,7 @@ ENV PATH $JAVA_HOME/bin:$PATH
 ENV HADOOP_VERSION 2.7.2
 ENV HADOOP_URL https://www.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
 RUN set -x \
-    && curl -kfSL "$HADOOP_URL" -o /tmp/hadoop.tar.gz \  
+    && curl -kfSL "$HADOOP_URL" -o /tmp/hadoop.tar.gz \
     && tar -xvf /tmp/hadoop.tar.gz -C /opt/ \
     && rm /tmp/hadoop.tar.gz*
 
