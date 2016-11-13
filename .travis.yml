@@ -13,6 +13,7 @@ script:
 
 after_success:
   - docker --version
-  - build.sh
+  - ls
+  - ./build.sh
   #- docker tag
   #- docker push
