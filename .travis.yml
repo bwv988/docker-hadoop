@@ -1,0 +1,18 @@
+sudo: required
+
+language: bash
+
+services:
+  - docker
+
+install:
+  - echo "Skipping install step."
+
+script:
+  - echo "Skipping testing steps."
+
+after_success:
+  - docker --version
+  - build.sh
+  #- docker tag
+  #- docker push
