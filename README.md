@@ -1,12 +1,12 @@
 # Hadoop Docker
 
-[![Build Status](https://api.travis-ci.org/bwv988/docker-hadoop.svg?branch=master)](https://api.travis-ci.org/bwv988/docker-hadoop.svg?branch=master)
+[![Build Status](https://api.travis-ci.org/bwv988/docker-hadoop.svg?branch=master)](https://travis-ci.org/bwv988/docker-hadoop)
 
 ## About
 
 This is a Debian Jessie-based dockerized Hadoop environment.
 
-Check out <https://github.com/bwv988/datascience-docker-sandbox> for usage examples.
+Check out <https://github.com/bwv988/datascience-playground> for usage examples.
 
 ## Version
 
