@@ -10,4 +10,4 @@ Check out <https://github.com/bwv988/datascience-playground> for usage examples.
 
 ## Version
 
-Hadoop 2.7.2
+Hadoop 2.7.3

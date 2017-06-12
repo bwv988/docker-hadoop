@@ -19,7 +19,7 @@ IMGPREFIX=bwv988
 
 build_img $IMGPREFIX base
 build_img $IMGPREFIX namenode
-build_img $IMGPREFIX nodemanager
-build_img $IMGPREFIX historyserver
+#build_img $IMGPREFIX nodemanager
+#build_img $IMGPREFIX historyserver
 build_img $IMGPREFIX datanode
-build_img $IMGPREFIX resourcemanager
+#build_img $IMGPREFIX resourcemanager
